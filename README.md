@@ -1,6 +1,6 @@
-# 🛡️ User Profile API with Image Upload
+# 🛡️ User Profile & Notes API with Image Upload
 
-A secure and scalable Node.js + Express backend for user registration, authentication, profile management, and image uploads. Built with MongoDB, JWT, Multer, and role-based access control.
+A secure and scalable Node.js + Express backend for user registration, authentication, profile management, image uploads, and role-protected note management. Built with MongoDB, JWT, Multer, and custom role-based access control.
 
 ---
 
@@ -11,18 +11,18 @@ A secure and scalable Node.js + Express backend for user registration, authentic
 - **Auth:** JWT (JSON Web Tokens)
 - **File Uploads:** Multer
 - **Roles & Permissions:** Custom Role model
-- **Frontend:** React 
+- **Frontend:** React (not included here, but compatible)
+
 ---
 
 ## 📦 Features
 
 - User registration with profile photo upload
 - Secure login with JWT
-- Fetch authenticated user details
-- Update profile (name, mobile, photo)
-- Delete profile with image cleanup
+- Fetch/update/delete user profile
 - Role-based access control
 - Static serving of uploaded images
+- Notes module: create, read, update, delete notes
 
 ---
 
