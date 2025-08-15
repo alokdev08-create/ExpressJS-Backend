@@ -11,8 +11,7 @@ A secure and scalable Node.js + Express backend for user registration, authentic
 - **Auth:** JWT (JSON Web Tokens)
 - **File Uploads:** Multer
 - **Roles & Permissions:** Custom Role model
-- **Frontend:** React (not included here, but compatible)
-
+- **Frontend:** React 
 ---
 
 ## 📦 Features
