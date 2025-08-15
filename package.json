@@ -1,17 +1,17 @@
 {
   "name": "inotebook-backend",
   "version": "1.0.0",
-  "description": "iNoteBook- your note book on cloud",
+  "description": "iNoteBook — your notebook on the cloud",
   "license": "ISC",
   "author": "",
-  "type": "yes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",                            // 👈 Required by Render
     "dev": "nodemon index.js",
     "start:dev": "cross-env NODE_ENV=development node index.js",
     "start:qa": "cross-env NODE_ENV=qa node index.js",
-    "start:prod": "cross-env NODE_ENV=production node index.js"
+    "start:prod": "cross-env NODE_ENV=production node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
