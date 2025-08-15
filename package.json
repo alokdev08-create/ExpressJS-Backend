@@ -6,7 +6,7 @@
   "author": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",                            // 👈 Required by Render
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "start:dev": "cross-env NODE_ENV=development node index.js",
     "start:qa": "cross-env NODE_ENV=qa node index.js",
