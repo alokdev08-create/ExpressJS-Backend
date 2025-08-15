@@ -31,5 +31,5 @@ A secure and scalable Node.js + Express backend for user registration, authentic
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/user-profile-api
+[git clone https://github.com/your-username/user-profile-api](https://github.com/alokdev08-create/ExpressJS-Backend.git)
 cd user-profile-api
