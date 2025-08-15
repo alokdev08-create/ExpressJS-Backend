@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 
 // 🌱 Load environment-specific config
 const config = require('./config'); // Loads from config/index.js
@@ -17,9 +19,18 @@ const PORT = config.port || 3000;
 // 🔗 Connect to MongoDB
 connectToDatabase(config.dbUri);
 
+// ✅ Ensure uploads folder exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
 // 🧩 Middleware
 app.use(express.json());
 app.use(cors());
+
+// ✅ Serve uploaded images statically
+app.use('/uploads', express.static(uploadDir));
 
 // 🔓 Public routes
 app.use('/api/auth', authRoutes);
