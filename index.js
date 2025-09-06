@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-
+const contactRoutes = require('./routes/contact'); // Import contact routes
 // 🌱 Load environment-specific config
 const config = require('./config'); // Loads from config/index.js
 const connectToDatabase = require('./db');
@@ -34,6 +34,13 @@ app.use('/uploads', express.static(uploadDir));
 
 // 🔓 Public routes
 app.use('/api/auth', authRoutes);
+if (typeof contactRoutes === 'function') {
+  app.use('/api/contact', contactRoutes);
+  console.log('✅ Contact routes loaded successfully');
+} else {
+  console.warn('⚠️ contactRoutes is not a valid Express router');
+}
+
 
 // ✅ Public health check — no auth
 app.get('/healthCheck', async (req, res) => {
