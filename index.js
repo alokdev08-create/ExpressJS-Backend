@@ -1,39 +1,46 @@
+// 🌐 Core dependencies
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const contactRoutes = require('./routes/contact'); // Import contact routes
-// 🌱 Load environment-specific config
-const config = require('./config'); // Loads from config/index.js
-const connectToDatabase = require('./db');
 
+// 📦 Custom modules
+const config = require('./config'); // Centralized config loader
+const connectToDatabase = require('./db'); // MongoDB connection logic
+
+// 📁 Routes
 const authRoutes = require('./routes/auth');
+const contactRoutes = require('./routes/contact');
 const notesRoutes = require('./routes/notes');
-const { authenticatedToken } = require('./middleware/userUtils');
-const roleGuard = require('./middleware/roleGuard');
 
+// 🛡️ Middleware
+const { authenticatedToken } = require('./middleware/userUtils'); // JWT validation
+const roleGuard = require('./middleware/roleGuard'); // Role-based access control
+
+// 🚀 Initialize Express app
 const app = express();
 const PORT = config.port || 3000;
 
 // 🔗 Connect to MongoDB
 connectToDatabase(config.dbUri);
 
-// ✅ Ensure uploads folder exists
+// 📂 Ensure uploads directory exists
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir); // Create uploads folder if missing
 }
 
-// 🧩 Middleware
-app.use(express.json());
-app.use(cors());
+// 🧩 Global middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(cors()); // Enable CORS for frontend-backend communication
 
-// ✅ Serve uploaded images statically
+// 🖼️ Serve static files from uploads folder
 app.use('/uploads', express.static(uploadDir));
 
-// 🔓 Public routes
+// 🔓 Public routes (no auth required)
 app.use('/api/auth', authRoutes);
+
 if (typeof contactRoutes === 'function') {
   app.use('/api/contact', contactRoutes);
   console.log('✅ Contact routes loaded successfully');
@@ -41,8 +48,7 @@ if (typeof contactRoutes === 'function') {
   console.warn('⚠️ contactRoutes is not a valid Express router');
 }
 
-
-// ✅ Public health check — no auth
+// 🩺 Health check endpoint
 app.get('/healthCheck', async (req, res) => {
   const dbState = mongoose.connection.readyState;
 
@@ -60,9 +66,9 @@ app.get('/healthCheck', async (req, res) => {
   });
 });
 
-// 🔐 Global auth middleware for protected routes
-app.use(authenticatedToken);
-app.use(roleGuard);
+// 🔐 Apply global auth middleware for protected routes
+app.use(authenticatedToken); // Verifies JWT
+app.use(roleGuard); // Checks user role
 
 // 🛡️ Protected routes
 app.use('/api/notes', notesRoutes);
@@ -72,6 +78,7 @@ app.get('/', (req, res) => {
   res.send('🟢 API is running');
 });
 
+// 🧪 Environment check
 app.get('/envCheck', (req, res) => {
   res.json({
     environment: process.env.NODE_ENV || 'development',
